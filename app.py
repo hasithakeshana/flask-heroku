@@ -22,65 +22,118 @@ def getPrice():
         data = request.get_json();
 
         user_date = data.get('date', '');
+        key = data.get('key', '');
 
-         # pickle file name
-        file_name = 'prophet_pickle_model'
+        
+        if key != "MuMEO0q447d3QnEOAfUP":
+                print("Invalid Key ! please check the API key, Please purchase a key, If you don't have! ")
+                return {"error" : "Invalid Key ! please check the API key, Please purchase a key, If you don't have!"}
 
-        # load the pickle file 
-        loaded_model = pickle.load(open(file_name,'rb'))
+        else:        
 
-        user_input = '2018-04-10';
+                # pickle file name
+                file_name = 'prophet_pickle_model2.pkl'
 
-        # hardcoded input of the user
-        future_date = pd.DataFrame({'ds':[user_date]})
+                # load the pickle file
+                loaded_model = pickle.load(open(file_name,'rb'))
 
-        # forecast using the model
-        out = loaded_model.predict(future_date)
+                future_date = pd.DataFrame({'ds':[user_date]})
 
-        # print the output
-        print("%.2f" % out.yhat[0])
+                # forecast using the model
+                out = loaded_model.predict(future_date)
 
-        # n = random.randint(100,150)
-        # print(n);
+                # print the output
+                print("%.2f" % out.yhat[0])
 
-        # convert to jsons
-        return {
-        "vegetable-code" : "TY-BEANS",
-        "vegetable-name" : "beans",
-        "area" : "nuwaraeliya",
-        "price-output": round(out.yhat[0],2),
-        "status-code": 200
-        }
+                # convert to jsons
+                return {
+                "vegetable-code" : "TY-BEANS",
+                "vegetable-name" : "beans",
+                "area" : "nuwaraeliya",
+                "price-output": round(out.yhat[0],2),
+                "status-code": 200
+                }
 
 @app.route('/getCarrotPrice', methods=['POST'])
 def getCarrot():
 
-    n = random.randint(100,200)
-    print(n);
+     # user inputs
+        data = request.get_json();
 
-     # convert to jsons
-    return {
-        "vegetable-code" : "TY-Carrot",
-        "vegetable-name" : "carrot",
-        "area" : "nuwaraeliya",
-        "price-output": n ,
-        "status-code": 200
-        }
+        user_date = data.get('date', '');
+        key = data.get('key', '');
 
-@app.route('/getTomatoPrice', methods=['POST'])
-def getTomato():
+        if key != "MuMEO0q447d3QnEOAfUP":
+                print("Invalid Key ! please check the API key, Please purchase a key, If you don't have! ")
+                return {"error" : "Invalid Key ! please check the API key, Please purchase a key, If you don't have!"}
 
-    n = random.randint(80,150)
-    print(n);
+        else:
 
-     # convert to jsons
-    return {
-        "vegetable-code" : "TY-Tomato",
-        "vegetable-name" : "tomato",
-        "area" : "nuwaraeliya",
-        "price-output": n ,
-        "status-code": 200
-        }        
+                # pickle file name
+                file_name = 'prophet_pickle_model2.pkl'
+
+                # load the pickle file
+                loaded_model = pickle.load(open(file_name,'rb'))
+
+                future_date = pd.DataFrame({'ds':[user_date]})
+
+                # forecast using the model
+                out = loaded_model.predict(future_date)
+
+                # print the output
+                print("%.2f" % out.yhat[0])
+
+                # convert to jsons
+                return {
+                "vegetable-code" : "TY-CARROT",
+                "vegetable-name" : "carrot",
+                "area" : "nuwaraeliya",
+                "price-output": round(out.yhat[0],2),
+                "status-code": 200
+                }
+    
+
+@app.route('/getPotatoPrice', methods=['POST'])
+def getPotato():
+
+         # user inputs
+        data = request.get_json();
+
+        user_date = data.get('date', '');
+        key = data.get('key', '');
+
+        if key != "MuMEO0q447d3QnEOAfUP":
+                print("Invalid Key ! please check the API key, Please purchase a key, If you don't have! ")
+                return {"error" : "Invalid Key ! please check the API key, Please purchase a key, If you don't have!"}
+
+        else:
+
+                # pickle file name
+                file_name = 'prophet_pickle_model2.pkl'
+
+                # load the pickle file
+                loaded_model = pickle.load(open(file_name,'rb'))
+
+                future_date = pd.DataFrame({'ds':[user_date]})
+
+                # forecast using the model
+                out = loaded_model.predict(future_date)
+
+                # print the output
+                print("%.2f" % out.yhat[0])
+
+                # convert to jsons
+                return {
+                "vegetable-code" : "TY-POTATO",
+                "vegetable-name" : "potato",
+                "area" : "nuwaraeliya",
+                "price-output": round(out.yhat[0],2),
+                "status-code": 200
+                }
+
+      
+
+   
 
 
 if __name__ == '__main__':
