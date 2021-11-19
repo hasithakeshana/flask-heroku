@@ -326,6 +326,72 @@ def getTomatoRangePrice():
         "status-code": 200
         }
 
+# prices without validations
+
+
+@app.route('/BeansPrice', methods=['POST'])
+def getBPrice():
+
+
+        # user inputs
+        data = request.get_json();
+
+        user_date = data.get('date', '');
+        
+        # pickle file name
+        file_name = 'prophet_pickle_model2.pkl'
+
+        # load the pickle file
+        loaded_model = pickle.load(open(file_name,'rb'))
+
+        future_date = pd.DataFrame({'ds':[user_date]})
+
+        # forecast using the model
+        out = loaded_model.predict(future_date)
+
+        # print the output
+        print("%.2f" % out.yhat[0])
+
+        # convert to jsons
+        return {
+        "vegetable-code" : "TY-BEANS",
+        "vegetable-name" : "beans",
+        "area" : "nuwaraeliya",
+        "price-output": round(out.yhat[0],2),
+        "status-code": 200
+        }
+
+
+@app.route('/TomatoPrice', methods=['POST'])
+def getT():
+
+         # user inputs
+        data = request.get_json();
+
+        user_date = data.get('date', '');
+        
+        # pickle file name
+        file_name = 'prophet_pickle_model1'
+
+        # load the pickle file
+        loaded_model = pickle.load(open(file_name,'rb'))
+
+        future_date = pd.DataFrame({'ds':[user_date]})
+
+        # forecast using the model
+        out = loaded_model.predict(future_date)
+
+        # print the output
+        print("%.2f" % out.yhat[0])
+
+        # convert to jsons
+        return {
+        "vegetable-code" : "TY-TOMATO",
+        "vegetable-name" : "tomato",
+        "area" : "nuwaraeliya",
+        "price-output": round(out.yhat[0],2),
+        "status-code": 200
+        }
 
 if __name__ == '__main__':
         app.run(debug=True)
